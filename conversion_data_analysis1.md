@@ -165,27 +165,27 @@ summary(logit_model)
     ## 
     ## Deviance Residuals: 
     ##     Min       1Q   Median       3Q      Max  
-    ## -3.1277  -0.0630  -0.0241  -0.0097   4.4248  
+    ## -2.9870  -0.0625  -0.0239  -0.0096   4.4130  
     ## 
     ## Coefficients:
     ##                       Estimate Std. Error z value Pr(>|z|)    
-    ## (Intercept)         -10.401075   0.184258 -56.448   <2e-16 ***
-    ## countryGermany        3.790263   0.163295  23.211   <2e-16 ***
-    ## countryUK             3.629282   0.149413  24.290   <2e-16 ***
-    ## countryUS             3.271683   0.145261  22.523   <2e-16 ***
-    ## age                  -0.073043   0.002850 -25.633   <2e-16 ***
-    ## new_user1            -1.762704   0.042648 -41.332   <2e-16 ***
-    ## sourceDirect         -0.135275   0.058475  -2.313   0.0207 *  
-    ## sourceSeo             0.010519   0.047800   0.220   0.8258    
-    ## total_pages_visited   0.756666   0.007426 101.895   <2e-16 ***
+    ## (Intercept)         -10.299921   0.178066 -57.843  < 2e-16 ***
+    ## countryGermany        3.831408   0.156329  24.509  < 2e-16 ***
+    ## countryUK             3.564359   0.141954  25.109  < 2e-16 ***
+    ## countryUS             3.203338   0.137538  23.291  < 2e-16 ***
+    ## age                  -0.075318   0.002851 -26.421  < 2e-16 ***
+    ## new_user1            -1.729786   0.042515 -40.687  < 2e-16 ***
+    ## sourceDirect         -0.162480   0.058123  -2.795  0.00518 ** 
+    ## sourceSeo            -0.037161   0.047645  -0.780  0.43542    
+    ## total_pages_visited   0.760681   0.007455 102.037  < 2e-16 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## (Dispersion parameter for binomial family taken to be 1)
     ## 
-    ##     Null deviance: 63139  on 221337  degrees of freedom
-    ## Residual deviance: 17957  on 221329  degrees of freedom
-    ## AIC: 17975
+    ##     Null deviance: 63214  on 221337  degrees of freedom
+    ## Residual deviance: 17930  on 221329  degrees of freedom
+    ## AIC: 17948
     ## 
     ## Number of Fisher Scoring iterations: 10
 
@@ -197,8 +197,8 @@ probs <- predict(logit_model, newdata = testset[, -6], type = "response")
 head(probs)
 ```
 
-    ##            5            6            8           13           16           21 
-    ## 0.0014527120 0.0001792525 0.0030708820 0.0002989631 0.0004962456 0.0110685223
+    ##            3            7           13           18           24           26 
+    ## 3.597566e-04 1.576436e-05 3.010691e-04 1.782883e-03 7.374703e-04 2.994022e-01
 
 ``` r
 preds <- ifelse(probs > 0.5, 1,0)
@@ -216,7 +216,7 @@ require(caret)
 head(preds)
 ```
 
-    ##  5  6  8 13 16 21 
+    ##  3  7 13 18 24 26 
     ##  0  0  0  0  0  0
 
 ``` r
@@ -227,26 +227,26 @@ confusionMatrix(as.factor(preds), as.factor(testset$converted))
     ## 
     ##           Reference
     ## Prediction     0     1
-    ##          0 91453   975
-    ##          1   357  2075
+    ##          0 91465   959
+    ##          1   356  2080
     ##                                           
-    ##                Accuracy : 0.986           
-    ##                  95% CI : (0.9852, 0.9867)
-    ##     No Information Rate : 0.9678          
+    ##                Accuracy : 0.9861          
+    ##                  95% CI : (0.9854, 0.9869)
+    ##     No Information Rate : 0.968           
     ##     P-Value [Acc > NIR] : < 2.2e-16       
     ##                                           
-    ##                   Kappa : 0.7499          
+    ##                   Kappa : 0.7528          
     ##                                           
     ##  Mcnemar's Test P-Value : < 2.2e-16       
     ##                                           
     ##             Sensitivity : 0.9961          
-    ##             Specificity : 0.6803          
-    ##          Pos Pred Value : 0.9895          
-    ##          Neg Pred Value : 0.8532          
-    ##              Prevalence : 0.9678          
-    ##          Detection Rate : 0.9641          
-    ##    Detection Prevalence : 0.9744          
-    ##       Balanced Accuracy : 0.8382          
+    ##             Specificity : 0.6844          
+    ##          Pos Pred Value : 0.9896          
+    ##          Neg Pred Value : 0.8539          
+    ##              Prevalence : 0.9680          
+    ##          Detection Rate : 0.9642          
+    ##    Detection Prevalence : 0.9743          
+    ##       Balanced Accuracy : 0.8403          
     ##                                           
     ##        'Positive' Class : 0               
     ## 
@@ -292,16 +292,16 @@ model_rf
     ##                      Number of trees: 100
     ## No. of variables tried at each split: 3
     ## 
-    ##         OOB estimate of  error rate: 1.44%
+    ##         OOB estimate of  error rate: 1.46%
     ## Confusion matrix:
     ##        0    1 class.error
-    ## 0 213294  896 0.004183202
-    ## 1   2286 4862 0.319809737
-    ##                 Test set error rate: 1.46%
+    ## 0 213268  911 0.004253452
+    ## 1   2317 4842 0.323648554
+    ##                 Test set error rate: 1.44%
     ## Confusion matrix:
     ##       0    1 class.error
-    ## 0 91453  357 0.003888465
-    ## 1  1031 2019 0.338032787
+    ## 0 91449  372 0.004051361
+    ## 1   992 2047 0.326423166
 
 As the training error and testing error are very close, there should not
 be overfitting problem. Also, the false positive rate is much higher
@@ -315,11 +315,11 @@ importance(model_rf)
 ```
 
     ##                     MeanDecreaseGini
-    ## country                     509.0456
-    ## age                         739.5238
-    ## new_user                    429.7142
-    ## source                      194.5522
-    ## total_pages_visited        8151.5502
+    ## country                     527.9259
+    ## age                         747.0113
+    ## new_user                    412.7389
+    ## source                      205.3857
+    ## total_pages_visited        8135.0168
 
 According to Gini index, total\_pages\_visited is the most important
 variable in predicting conversion rate. However, this is not very
@@ -344,13 +344,13 @@ model_rf1
     ##         OOB estimate of  error rate: 3.23%
     ## Confusion matrix:
     ##        0 1 class.error
-    ## 0 214190 0           0
-    ## 1   7148 0           1
-    ##                 Test set error rate: 3.22%
+    ## 0 214179 0           0
+    ## 1   7159 0           1
+    ##                 Test set error rate: 3.2%
     ## Confusion matrix:
     ##       0 1 class.error
-    ## 0 91810 0           0
-    ## 1  3050 0           1
+    ## 0 91821 0           0
+    ## 1  3039 0           1
 
 This is not so good. The new model does not predict any ones, probably
 because the data is imbalanced. Let’s change the data weights and rerun
@@ -369,16 +369,16 @@ model_rf2
     ##                      Number of trees: 100
     ## No. of variables tried at each split: 3
     ## 
-    ##         OOB estimate of  error rate: 13.95%
+    ##         OOB estimate of  error rate: 14.09%
     ## Confusion matrix:
     ##        0     1 class.error
-    ## 0 186548 27642   0.1290536
-    ## 1   3232  3916   0.4521544
-    ##                 Test set error rate: 13.99%
+    ## 0 186231 27948   0.1304890
+    ## 1   3245  3914   0.4532756
+    ##                 Test set error rate: 14.03%
     ## Confusion matrix:
     ##       0     1 class.error
-    ## 0 79945 11865   0.1292343
-    ## 1  1408  1642   0.4616393
+    ## 0 79902 11919   0.1298069
+    ## 1  1388  1651   0.4567292
 
 Check the variable importance again.
 
@@ -387,10 +387,10 @@ importance(model_rf2)
 ```
 
     ##          MeanDecreaseGini
-    ## country         8115.5208
-    ## age             5456.8352
-    ## new_user       12961.0322
-    ## source           549.0783
+    ## country         8225.1087
+    ## age             5508.3986
+    ## new_user       12765.1297
+    ## source           591.6458
 
 New user is most important factor now. Source is not important at all.
 
